@@ -1,0 +1,9 @@
+github.com/iVitaliya/colors-go v0.0.0-20220518190557-9b4892290b00 h1:uf7U58ByeGqAaows3hAHUxwH0//yaGn9KZcVGlcI1Ts=
+github.com/iVitaliya/colors-go v0.0.0-20220518190557-9b4892290b00/go.mod h1:7uOhJyOcGvHdMIITKZmkKritxYutDUAsHL071aCNtc8=
+github.com/iVitaliya/logger-go v0.0.0-20220817124746-eac18f71945e h1:fJX6IjIlkeoJf4v+u8FTR4TNg5LHx40DvWmKt/mHhk0=
+github.com/iVitaliya/logger-go v0.0.0-20220817124746-eac18f71945e/go.mod h1:2+VHyYY8mTGAmQYuz6Xkqkyr6D51gzxlBX9U3uUu64k=
+github.com/mattn/go-isatty v0.0.14 h1:yVuAays6BHfxijgZPzw+3Zlu5yQgKGP2/hcQbHb7S9Y=
+github.com/mattn/go-isatty v0.0.14/go.mod h1:7GGIvUiUoEMVVmxf/4nioHXj79iQHKdU27kJ6hsGG94=
+golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20220727055044-e65921a090b8 h1:dyU22nBWzrmTQxtNrr4dzVOvaw35nUYE279vF9UmsI8=
+golang.org/x/sys v0.0.0-20220727055044-e65921a090b8/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
