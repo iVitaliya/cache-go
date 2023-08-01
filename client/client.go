@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 	"net"
 
 	"github.com/iVitaliya/cache-go/protocol"
@@ -36,5 +37,50 @@ func (c *Client) Get(ctx context.Context, key []byte) ([]byte, error) {
 	}
 
 	_, err := c.conn.Write(cmd.Bytes())
+	if err != nil {
+		return nil, err
+	}
 
+	resp, err := protocol.ParseGetResponse(c.conn)
+	if err != nil {
+		return nil, err
+	}
+
+	if resp.Status == protocol.StatusKeyNotFound {
+		return nil, fmt.Errorf("could not find key (%s)", key)
+	}
+
+	if resp.Status != protocol.StatusOK {
+		return nil, fmt.Errorf("server responded with non OK status [%s]", resp.Status)
+	}
+
+	return resp.Value, nil
+}
+
+func (c *Client) Set(ctx context.Context, key []byte, value []byte, ttl int) error {
+	cmd := protocol.CommandSet{
+		Key:   key,
+		Value: value,
+		TTL:   ttl,
+	}
+
+	_, err := c.conn.Write(cmd.Bytes())
+	if err != nil {
+		return err
+	}
+
+	resp, err := protocol.ParseSetResponse(c.conn)
+	if err != nil {
+		return err
+	}
+
+	if resp.Status != protocol.StatusOK {
+		return fmt.Errorf("server responded with non OK status [%s]", resp.Status)
+	}
+
+	return nil
+}
+
+func (c *Client) Close() error {
+	return c.conn.Close()
 }
