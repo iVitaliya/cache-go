@@ -1,3 +1,5 @@
+## `Main.go` Code Example
+```go
 package main
 
 import (
@@ -63,3 +65,4 @@ func SendStuff() {
 		}(i)
 	}
 }
+```
