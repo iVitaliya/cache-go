@@ -1,10 +1,21 @@
 package cache
 
 import (
+	"github.com/iVitaliya/cache-go/client"
 	"github.com/iVitaliya/cache-go/framework"
 )
 
-func CreateDefaultServer() *framework.Server {
+type cacheClient struct {
+	Err  error
+	User *client.Client
+}
+
+type cacheServer struct {
+	Server *framework.Server
+	Client *cacheClient
+}
+
+func CreateDefault() *cacheServer {
 	var (
 		listenAddr = ":3000"
 		leaderAddr = ""
@@ -17,10 +28,18 @@ func CreateDefaultServer() *framework.Server {
 	}
 
 	server := framework.NewServer(opts, framework.New())
-	return server
+	client, err := client.New(listenAddr, client.Options{})
+
+	return &cacheServer{
+		Server: server,
+		Client: &cacheClient{
+			Err:  err,
+			User: client,
+		},
+	}
 }
 
-func CreateCustomServer(listenAddr string, leaderAddr string) *framework.Server {
+func CreateCustomServer(listenAddr string, leaderAddr string) *cacheServer {
 	opts := framework.ServerOpts{
 		ListenAddr: listenAddr,
 		LeaderAddr: leaderAddr,
@@ -28,5 +47,13 @@ func CreateCustomServer(listenAddr string, leaderAddr string) *framework.Server 
 	}
 
 	server := framework.NewServer(opts, framework.New())
-	return server
+	client, err := client.New(listenAddr, client.Options{})
+
+	return &cacheServer{
+		Server: server,
+		Client: &cacheClient{
+			Err:  err,
+			User: client,
+		},
+	}
 }
