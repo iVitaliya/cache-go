@@ -4,11 +4,11 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/iVitaliya/cache-go/client"
 	"github.com/iVitaliya/cache-go/framework"
-	"github.com/iVitaliya/logger-go"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 	)
 	flag.Parse()
 
-	opts := ServerOpts{
+	opts := framework.ServerOpts{
 		ListenAddr: *listenAddr,
 		IsLeader:   len(*leaderAddr) == 0,
 		LeaderAddr: *leaderAddr,
@@ -31,7 +31,7 @@ func main() {
 		}
 	}()
 
-	server := NewServer(opts, framework.New())
+	server := framework.NewServer(opts, framework.New())
 	server.Start()
 }
 
@@ -40,7 +40,7 @@ func SendStuff() {
 		go func(i int) {
 			client, err := client.New(":3000", client.Options{})
 			if err != nil {
-				logger.Error(err)
+				log.Fatal(err)
 			}
 
 			var (
@@ -50,14 +50,14 @@ func SendStuff() {
 
 			err = client.Set(context.Background(), key, value, 0)
 			if err != nil {
-				logger.Error(err)
+				log.Fatal(err)
 			}
 
 			fetchedValue, err := client.Get(context.Background(), key)
 			if err != nil {
-				logger.Error(err)
+				log.Fatal(err)
 			}
-			logger.Debug(fetchedValue)
+			log.Print(fetchedValue)
 
 			client.Close()
 		}(i)
